@@ -1,5 +1,4 @@
-#set(text(size: 16pt))
-
+#set text(size: 16pt)
 = The Linguistic Features of the Anthropocene
 
 Hello everyone, today, my talk concerns investigating the Linguistic Features of the Anthropocene, and while we will discuss preliminary results that we have obtained, a portion of this talk will be about challenges accessing data and compute resources.
@@ -14,18 +13,7 @@ This project is the result of a very interdisciplinary team. Heading up the proj
 
 == Slide
 
-First, we are going to discuss the technology, data, computational workflows, and all the rest of the fun stuff that makes computers go fast. I have been tinkering with computers since I was a pre-teen, and I hope my love for seeing computers put up very big numbers shines through today. Then, we are going to highlight what our project is, why is it important, how we are doing it, and our preliminary results. So, to start out with...
-
-
-== Slide
-
 Let's talk about that time I used 70 GPUs on Quest. If you don't know, Quest is Northwestern's supercomputing center. The research computing team is absolutely incredible, and if you are a humanist who needs access to big compute centers on the cheap, Quest should be the first place you go. Specifically thanks to David Glass and Emilio Lehoucq for hanging out with me and installing my special little programs that only I use on Quest. So our workflow looks something like this: you clean the data with NLTK, getting out stopwords and non-english words, as it would contribute little meaning to a model. Stopwords are words like "a", "if", "the", that are far too frequent to really contribute any real information to the model. We then create the embeddings of these cleaned texts with the SentenceTransformers library, we used all-MiniLM-L6-v2, a widely used and computationally inexpensive model to get the text vectors. We then use Uniform Manifold Approximation and Projection to bring the high-dimensional space down to a 2-dimensional space for clustering and visualization. Then, we use the very tersely-titled Hierarchical Density-Based Spatial Clustering of Applications with Noise, which essentially means that it can clustering objects hierarchically, allowing us to see which clusters are closest and furthest from one another. Then, we can run class-based Term Frequency-Inverse Document Frequency, or c-TF-IDF, to extract the most representative terms for specific tops or classes of documents. Over millions of documents, this is a very computationally expensive task. So we try to parallelize the workflow over with many submissions to the Quest supercomputing center, allowing us very fast and efficient processing over many nodes. For one of these runs, I sent in about 100 jobs to the Quest supercomputing center. And I guess that was a slow week for quest because it gave me all of the GPUs at once. I took up so many GPUs that apparently some students in the stats department were talking about "what could a librarian" possibly be doing with all of these GPUs, well, now they know, it was this.
-
-== Slide
-
-Regardless, now that we have the data, we can start building some actually cool stuff. We chose BERTopic for its' ease of use, modularity, and capacity for time-dependent and class-based modelling. If you are a digital humanist doing big data with text, RAPIDSAI is quite possibly the greatest thing in the world and will change your life. It is a project from NVIDIA, and offers 100% API compatibility with `pandas` and `scikit-learn`, but implemented in CUDA, their GPU parallel processing framework. RAPIDS allowed us to iterate so so so much faster than we could have done otherwise. I know NVIDIA sponsored this event but I promise they did not pay me to say this but their tooling is so far beyond what anyone else is doing and it is open source, which is very nice.
-
-So now that we have a CUDA-enabled workflow to bring analyzing our time-to-insight from hours to minutes ---
 
 == Slide
 
@@ -51,10 +39,15 @@ Our first step is to identify the meaning of the word Anthropocene using the con
 
 But first, a short detour to talk about the real reason we are here, computation and data for research. There are many many products out there that sell literary data from academic articles, newspapers, pamphlets, novels, and any other piece of media one could hope to find, but each have distinct problems that are difficult to overcome. At first, we tried Open Alex, which provided article n-grams up until late last year. OurResearch, the company behind it, turned off the n-grams API, completely halting our research and essentially forcing us to start over again. After this, we tried Semantic Scholar for a while, which, while the data behind the text itself is very good, had very sparse timestamp data, which disallowed us from seeing trends over time. We ended up using Constellate, a product from the people behind JSTOR. Constellate acts as more of a "data portal" rather than a place to do very large scale analysis in a unified environment. While Constellate itself will be deprecated in July, I have heard that they will be keeping their Data for Research program, and they are very communicative and helpful in this project. But the point of this is that we need better open access academic articles so that free projects can scrape them and make them available for text mining, without any barriers in licensing or copyright. This is now going to be a shout-out for my Digital Publishing operation, that if your field lacks diamond open access publishing venues, meaning that authors pay no open access fees and readers also pay no fees, get in contact with me and we can talk about setting up a cutting-edge journal for your field that can compete on every front with the big publishers.
 
+== Slide
+
+Regardless, now that we have the data, we can start building some actually cool stuff. We chose BERTopic for its' ease of use, modularity, and capacity for time-dependent and class-based modelling. If you are a digital humanist doing big data with text, RAPIDSAI is quite possibly the greatest thing in the world and will change your life. It is a project from NVIDIA, and offers 100% API compatibility with `pandas` and `scikit-learn`, but implemented in CUDA, their GPU parallel processing framework. RAPIDS allowed us to iterate so so so much faster than we could have done otherwise. I know NVIDIA sponsored this event but I promise they did not pay me to say this but their tooling is so far beyond what anyone else is doing and it is open source, which is very nice.
+
+So now that we have a CUDA-enabled workflow to bring analyzing our time-to-insight from hours to minutes.
 
 
 == Slide
 
-Now we move to the results. Here, we took a clue from ecology, quite fitting, I think, concerning the topic, calculate the inverse of the probability that two randomly selected samples will belong to the same species. Here, we have several hundred topics, which represent a "species." JSTOR gives each document a tdmCategory, defining whether the document belongs to arts, the physical science, the medical sciences, _et cetera_. So, within each topic, we want to calculate the probability that two randomly selected documents will belong to the same tdmCategory. This allows us to calculate the diversity, or interdisciplinarity, of a given topic.
+We can move to the results. Here, we took a clue from ecology, quite fitting, I think, concerning the topic, calculate the inverse of the probability that two randomly selected samples will belong to the same species. Here, we have several hundred topics, which represent a "species." JSTOR gives each document a tdmCategory, defining whether the document belongs to arts, the physical science, the medical sciences, _et cetera_. So, within each topic, we want to calculate the probability that two randomly selected documents will belong to the same tdmCategory. This allows us to calculate the diversity, or interdisciplinarity, of a given topic.
 
 Our preliminary results include the following.

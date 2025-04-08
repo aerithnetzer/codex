@@ -40,7 +40,7 @@
 == Introduction
 
 Team Members:
-1. James Lee (Professor, Northwestern University Libraries/Medill)
+1. James Lee (Professor Northwestern University Libraries/Medill)
 2. Han Liu (Professor, McCormick School of Engineering)
 3. Lining Mao (PhD Student, McCormick School of Engineering)
 4. Kelsey Rydland (Librarian, Northwestern University Libraries)
@@ -131,7 +131,7 @@ The takeaway: Humanities labs with scarce funding should take advantage of Quest
 
 == Interpretation of the Data
 
-#set text(size: 15pt)
+#set text(size: 18pt)
 
 Top 3 Topic c-TF-IDF scores:
 
@@ -141,8 +141,9 @@ Top 3 Topic c-TF-IDF scores:
 
 = The Core Takeaway
 
+#set text(size: 18pt)
 Themes of professional associations, sea-trade, and health/hygiene education bridge the gap between the humanities and the sciences
 
-= Next Steps
+== Next Steps
 
 Look at the most representative articles from each topic and identify how these topics represent the "Anthropocene"
